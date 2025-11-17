@@ -63,7 +63,46 @@
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">archive</h3>
         </div>
     </main>
-   
+   <div class="modal w-full h-screen fixed top-0 left-0 backdrop-blur-[2px] flex justify-center items-center p-4 hidden">
+    <form action="" class=" relative w-full max-w-116 bg-white h-128 rounded-xl shadow-md p-4 flex flex-col items-center gap-1 overflow-y-auto">
+        <button class="absolute top-2 right-4 text-3xl cursor-pointer">&times;</button>
+        <h2 class="text-green-500 font-bold text-3xl ">Add Worker</h2>
+        <div class="flex flex-col w-full gap-1">
+            <label for="FullName">FullName:</label>
+            <input type="text" placeholder="Enter Your FullName" class=" p-2 bg-gray-200 rounded border border-gray-300" required>
+        </div>
+        <div class="flex flex-col w-full gap-1">
+        <label for="Role">Role:</label>
+        <select name="Role" id="Role" class="w-full p-2 bg-gray-200">
+            <option value="Manager">Manager</option>
+            <option value="Réceptionnistes">Réceptionnistes</option>
+            <option value="Techniciens IT">Techniciens IT</option>
+            <option value="Agents de sécurité">Agents de sécurité</option>
+            <option value="Nettoyage">Nettoyage</option>
+            <option value="Autres rôles">Autres rôles</option>
+        </select>
+       </div>
+        <div class="flex flex-col w-full gap-1">
+            <label for="Profile">Profile Photo:</label>
+            <input type="text" placeholder="https://www.exemple.com/photo.png" class=" p-2 bg-gray-200 rounded border border-gray-300">
+            <img src="img/Profil.jpg" alt="" class="w-16 h-16">
+        </div>
+        <div class="flex flex-col w-full gap-1">
+            <label for="Email">Email:</label>
+            <input type="email" placeholder="Enter Email" class=" p-2 bg-gray-200 rounded border border-gray-300" required>
+        </div>
+        <div class="flex flex-col w-full gap-1">
+            <label for="Phone Number">Phone Number:</label>
+            <input type="phone" placeholder="Enter Phone" class=" p-2 bg-gray-200 rounded border border-gray-300" required>
+        </div>
+        <div class="flex flex-col w-full gap-1">
+            <label for="Phone Number">Experiences:</label>
+            <button class="w-fit bg-gray-200 border border-gray-400 p-2 cursor-pointer rounded">Add Experience</button>
+        </div>
+        <input type="submit" class="bg-green-400 p-2 w-full rounded border-gray-300 cursor-pointer transition-all Duration-1000 hover:scale-95">
+
+    </form>
+   </div>
     <script src="app.js"></script>
 </body>
 </html>
