@@ -19,6 +19,9 @@ addBtn.addEventListener('click',()=>{
 })
 closemodal.forEach((closemdl)=>{
     closemdl.addEventListener('click',(e)=>{
-            addForum.classList.add('hidden');
+        const parentModal = closemdl.closest('.modal');
+        if (parentModal) {
+            parentModal.classList.add('hidden');
+        }
     })
 })
