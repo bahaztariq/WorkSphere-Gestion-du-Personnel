@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/logo.svg">
     <style>
         .WorkSpace{
           display: grid;
@@ -20,9 +21,9 @@
         }
     </style>
 </head>
-<body class="  w-full h-screen flex bg-orange-100 p-4 gap-4 flex-col-reverse lg:flex-row">
+<body class="w-full h-screen flex bg-orange-100 p-4 gap-4 flex-col-reverse lg:flex-row">
     <aside class="sidebar w-full h-full bg-white shadow-md p-4 rounded-2xl flex flex-col items-center gap-4 md:w-1/4">
-      <h1 class="text-black font-bold text-3xl"><i class="fas fa-users"></i>WorkSphere</h1 >
+      <h1 class="text-black font-bold text-3xl"><i class="fas fa-users"></i> WorkSphere</h1 >
       <button id="add-worker-btn" class="bg-green-400 w-full p-2 rounded cursor-pointer transition-all Duration-500 hover:scale-95 "><i class="fas fa-plus"></i> Add New Worker</button>
       <input type="text" class="search-box bg-gray-200 w-full p-2 rounded cursor-pointer transition-all Duration-500" placeholder="Rechercher un employé..." id="search">
       <h3 class="text-black font-bold">Unassigned Staff (<span id="unassigned-count">0</span>)</h3>
@@ -63,9 +64,9 @@
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">archive</h3>
         </div>
     </main>
-   <div class="modal w-full h-screen fixed top-0 left-0 backdrop-blur-[2px] flex justify-center items-center p-4 hidden">
-    <form action="" class=" relative w-full max-w-116 bg-white h-128 rounded-xl shadow-md p-4 flex flex-col items-center gap-1 overflow-y-auto">
-        <button class="absolute top-2 right-4 text-3xl cursor-pointer">&times;</button>
+   <div id="addForum" class="modal w-full h-screen fixed top-0 left-0 backdrop-blur-[2px] flex justify-center items-center p-4 hidden">
+    <form action="" class=" relative w-full max-w-116 bg-white h-128 rounded-xl shadow-md p-4 flex flex-col items-center gap-2 overflow-y-auto">
+        <button class=" close-Modal-btn absolute top-2 right-4 text-3xl cursor-pointer">&times;</button>
         <h2 class="text-green-500 font-bold text-3xl ">Add Worker</h2>
         <div class="flex flex-col w-full gap-1">
             <label for="FullName">FullName:</label>
@@ -85,7 +86,7 @@
         <div class="flex flex-col w-full gap-1">
             <label for="Profile">Profile Photo:</label>
             <input type="text" placeholder="https://www.exemple.com/photo.png" class=" p-2 bg-gray-200 rounded border border-gray-300">
-            <img src="img/Profil.jpg" alt="" class="w-16 h-16">
+            <img src="" alt="Profil Picture" class="w-16 h-16" onerror="this.onerror=null; this.src='img/Profil.jpg'">
         </div>
         <div class="flex flex-col w-full gap-1">
             <label for="Email">Email:</label>
@@ -97,11 +98,48 @@
         </div>
         <div class="flex flex-col w-full gap-1">
             <label for="Phone Number">Experiences:</label>
+            <div class="exp-container w-full bg-gray-200 p-2 flex flex-col gap-2">
+            <div class="exp-item">
+              <div class="flex justify-between items-center">
+                <h4 class="font-bold">Expérience 1</h4>
+                <button class="remove-exp-btn text-red-500 hover:text-red-700 hidden" type="button">&times;</button>
+              </div>
+              <input type="text" placeholder="Poste" class="exp-title w-full p-2 bg-white rounded border border-gray-300" required>
+              <input type="text" placeholder="Entreprise" class="exp-company w-full p-2 bg-white rounded border border-gray-300" required>
+              <div class="flex gap-2">
+                <input type="date" class="exp-start p-2 bg-white rounded border border-gray-300 flex-1" required>
+                <input type="date" class="exp-end p-2 bg-white rounded border border-gray-300 flex-1" required>
+              </div>
+            </div>
+            </div>
             <button class="w-fit bg-gray-200 border border-gray-400 p-2 cursor-pointer rounded">Add Experience</button>
         </div>
         <input type="submit" class="bg-green-400 p-2 w-full rounded border-gray-300 cursor-pointer transition-all Duration-1000 hover:scale-95">
 
     </form>
+   </div>
+   <div id="details-model" class="modal  w-full h-screen fixed top-0 left-0 backdrop-blur-[2px] flex justify-center items-center p-4 hidden">
+    <div class="inforamtion relative w-full max-w-116 bg-white max-h-100 rounded-xl shadow-md px-2 py-4 flex flex-col gap-2 overflow-y-auto ">
+        <button class="close-Modal-btn absolute top-2 right-4 text-3xl cursor-pointer">&times;</button>
+        <div class="flex gap-1 md:gap-4">
+        <img src="img/Profil.jpg" alt="Profil Picture" class="w-32 h-32">
+         <div>
+            <h2 class="text-black font-bold text-sm md:text-lg mb-2">Personnel inforamtions</h2>
+            <p>Full Name :<span class="name"></span></p>
+            <p>Email :<span class="role"></span></p>
+            <p>Phone :<span class="phone"></span></p>
+            <p>Role :<span class="role"></span></p>
+            <p>Actual Place :<span class="Actual-place"></span></p>
+         </div>
+        </div>
+        <div>
+            <h2 class="text-black font-bold text-sm md:text-lg mb-2">Experiences</h2>
+            <div class="w-full min-h-28 bg-gray-200 border border-gray-100 rounded"></div>
+        </div>
+        <div class="flex gap-1 w-full justify-end">
+        <button class="Delete-btn bg-red-400 p-2 rounded  cursor-pointer transition-all Duration-500 hover:scale-95"><i class="fa-regular fa-trash-can"></i> Delete</button>
+        <button class="Edit-btn bg-yellow-400 p-2 rounded cursor-pointer transition-all Duration-500 hover:scale-95"><i class="fa-solid fa-pen"></i> Edit</button>
+        </div>
    </div>
     <script src="app.js"></script>
 </body>
