@@ -10,6 +10,9 @@ const countSpan = document.getElementById('unassigned-count');
 const expContainer = document.querySelector('.exp-container');
 const expItem = document.querySelector('.exp-item');
 const addExpBtn = document.getElementById('add-exp-btn');
+const previewimg = document.getElementById('previewimg');
+const imgUrl =document.getElementById('img-url');
+
 
 
 const zonePermissions = {
@@ -62,3 +65,69 @@ closemodal.forEach((closemdl)=>{
         }
     })
 })
+
+imgUrl.addEventListener('change',e =>{
+    previewimg.src = e.target.value;
+})
+
+function isAllowed(role,zone){
+    return zonePermissions[zone].includes(role);
+}
+function validateForm(formData) {
+    const nameRegex = /^[a-zA-ZÀ-ÿ\s'-]{2,50}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[\d\s\-\+\(\)]{10,20}$/;
+
+    if (!nameRegex.test(formData.fullname)) {
+        alert('Nom invalide (2-50 caractères, lettres uniquement)');
+        return false;
+    }
+
+    if (!emailRegex.test(formData.email)) {
+        alert('Email invalide');
+        return false;
+    }
+
+    if (!phoneRegex.test(formData.phone)) {
+        alert('Numéro de téléphone invalide');
+        return false;
+    }
+
+    return true;
+}
+
+workerForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const experiences = [];
+    const expItems = expContainer.querySelectorAll('.exp-item');
+    
+    expItems.forEach(item => {
+        experiences.push({
+            title: item.querySelector('.exp-title').value,
+            company: item.querySelector('.exp-company').value,
+            startDate: item.querySelector('.exp-start').value,
+            endDate: item.querySelector('.exp-end').value
+        });
+    });
+
+    const worker = {
+        id: Date.now(),
+        fullname: workerForm.querySelector('input[type="text"]').value,
+        role: workerForm.querySelector('#Role').value,
+        photo: imgUrl.value || 'img/Profil.jpg',
+        email: workerForm.querySelector('input[type="email"]').value,
+        phone: workerForm.querySelector('input[type="phone"]').value,
+        experiences: experiences,
+        zone: null
+    };
+
+    if (!validateForm(worker)) return;
+
+    
+        workersData.push(worker);
+
+    addForum.classList.add('hidden');
+
+    localStorage.setItem('workSphereData',JSON.stringify(workersData));
+});
