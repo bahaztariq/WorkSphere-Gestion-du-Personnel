@@ -25,6 +25,7 @@ const zonePermissions = {
 };
 
 let workersData = JSON.parse(localStorage.getItem('workSphereData')) || [];
+DisplayStaff(workersData);
 
 addExpBtn.addEventListener('click', addExperienceField);
 
@@ -124,10 +125,29 @@ workerForm.addEventListener('submit', e => {
 
     if (!validateForm(worker)) return;
 
-    
-        workersData.push(worker);
+    workersData.push(worker);
 
     addForum.classList.add('hidden');
 
     localStorage.setItem('workSphereData',JSON.stringify(workersData));
 });
+
+function DisplayStaff(workersData) {
+
+    unassignedList.innerHTML = '';
+    workersData.forEach(staff => {
+        const stafItem = document.createElement('div');
+        stafItem.draggable='true';
+        stafItem.classList.add('w-full','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
+        stafItem.innerHTML = `
+                                <div class="flex">
+                                    <img src="${staff.photo}" alt="staff image" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
+                                    <h3 class="font-bold text-[.8rem] md:text-[1rem] mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> <span class="md:text-[.8rem] text-gray-400">${staff.role}</span></h3>
+                                </div>
+                                <div class="flex">
+                                    <button class="mr-3 text-yellow-600 text-[.7rem] md:text-[1.2rem] font-bold cursor-pointer">Edit</button>
+                                </div>`
+                            ;
+        unassignedList.appendChild(stafItem);
+    })
+}
