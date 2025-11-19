@@ -128,7 +128,7 @@ workerForm.addEventListener('submit', e => {
     workersData.push(worker);
 
     addForum.classList.add('hidden');
-
+    workerForm.reset();
     localStorage.setItem('workSphereData',JSON.stringify(workersData));
     DisplayStaff(workersData);
 });
@@ -139,6 +139,9 @@ function DisplayStaff(workersData) {
     workersData.forEach(staff => {
         const stafItem = document.createElement('div');
         stafItem.draggable='true';
+        stafItem.addEventListener('click',()=>{
+            detailsmodal.classList.remove('hidden');
+        })
         stafItem.classList.add('Member','w-full','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
         stafItem.innerHTML = `
                                 <div class="flex">
@@ -168,7 +171,6 @@ Members.forEach(Member => {
 rooms.forEach(room => {
     room.addEventListener("dragover", e => {
         const draggable = document.querySelector(".dragging");
-
         room.appendChild(draggable)
     })
 })
