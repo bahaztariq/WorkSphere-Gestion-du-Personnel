@@ -68,7 +68,7 @@ closemodal.forEach((closemdl)=>{
 })
 
 imgUrl.addEventListener('change',e =>{
-    previewimg.src = e.target.value;
+    previewimg.src = e.target.value || '../img/Profil.jpg';
 })
 
 function isAllowed(role,zone){
@@ -130,6 +130,7 @@ workerForm.addEventListener('submit', e => {
     addForum.classList.add('hidden');
 
     localStorage.setItem('workSphereData',JSON.stringify(workersData));
+    DisplayStaff(workersData);
 });
 
 function DisplayStaff(workersData) {
@@ -138,7 +139,7 @@ function DisplayStaff(workersData) {
     workersData.forEach(staff => {
         const stafItem = document.createElement('div');
         stafItem.draggable='true';
-        stafItem.classList.add('w-full','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
+        stafItem.classList.add('Member','w-full','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
         stafItem.innerHTML = `
                                 <div class="flex">
                                     <img src="${staff.photo}" alt="staff image" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
@@ -151,3 +152,28 @@ function DisplayStaff(workersData) {
         unassignedList.appendChild(stafItem);
     })
 }
+
+const Members = document.querySelectorAll(".Member")
+
+Members.forEach(Member => {
+    Member.addEventListener("dragstart", e => {
+        Member.classList.add("dragging");
+    })
+
+    Member.addEventListener("dragend", e => {
+        Member.classList.remove("dragging");
+    })
+})
+
+rooms.forEach(room => {
+    room.addEventListener("dragover", e => {
+        const draggable = document.querySelector(".dragging");
+
+        room.appendChild(draggable)
+    })
+})
+
+unassignedList.addEventListener("dragover", e => {
+        const draggable = document.querySelector(".dragging");
+        unassignedList.appendChild(draggable);
+})

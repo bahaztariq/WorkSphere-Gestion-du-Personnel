@@ -27,14 +27,14 @@
       <button id="add-worker-btn" class="bg-green-400 w-full p-2 rounded cursor-pointer transition-all Duration-500 hover:scale-95 "><i class="fas fa-plus"></i> Add New Worker</button>
       <input type="text" class="search-box bg-gray-200 w-full p-2 rounded cursor-pointer transition-all Duration-500" placeholder="Rechercher un employé..." id="search">
       <h3 class="text-black font-bold">Unassigned Staff (<span id="unassigned-count">0</span>)</h3>
-      <div class="unassigned-list w-full h-full" id="unassigned-list"></div>
+      <div class="unassigned-list w-full h-full flex flex-col gap-2" id="unassigned-list"></div>
       <button id="auto-assign-btn" class="justify-self-end bg-orange-400 w-full p-2 rounded cursor-pointer transition-all Duration-500 hover:scale-95"><i class="fas fa-magic"></i> Réorganisation automatique</button>
    </aside>
    <main class="relative w-full aspect-[5/3] shadow-md rounded">
     <img src="img/WorkSpace.jpg" alt="WorkSpace" class="absolute top-0 left-0 -z-50 w-full h-full">
     <div class="WorkSpace w-full h-full" id="WorkSpace">
         <div class="relative [grid-area:conference]">
-            <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-red-400 opacity-50"></div>
+            <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-green-300 opacity-50"></div>
             <button class="absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2  text-black  font-bold text-lg">conference</h3>
         </div>
@@ -54,7 +54,7 @@
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">Réception</h3>
         </div>
         <div class="relative [grid-area:personnel]">
-            <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-red-400 opacity-50"></div>
+            <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-green-300 opacity-50"></div>
             <button class="absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
             <h3 class="absolute top-1 left-1/2 -translate-x-1/2 text-black font-bold text-xs md:text-lg md:top-2">personnel</h3>
         </div>
@@ -86,7 +86,7 @@
         <div class="flex flex-col w-full gap-1">
             <label for="Profile">Profile Photo:</label>
             <input type="text" id="img-url" placeholder="https://www.exemple.com/photo.png" class=" p-2 bg-gray-200 rounded border border-gray-300">
-            <img id="previewimg" src="" alt="Profil Picture" class="w-16 h-16" onerror="this.onerror=null; this.src='img/Profil.jpg'">
+            <img id="previewimg" src="" alt="Profil Picture" class="w-16 h-16 rounded-full" onerror="this.onerror=null; this.src='img/Profil.jpg'">
         </div>
         <div class="flex flex-col w-full gap-1">
             <label for="Email">Email:</label>
