@@ -206,3 +206,13 @@ function showData(staff){
          `;
      })
 }
+
+const addroombtn = document.querySelectorAll('.add-room-btn');
+const addmodal =document.getElementById('add-modal')
+
+
+addroombtn.forEach(btn=>{
+    btn.addEventListener('click',e=>{
+        addmodal.classList.remove('hidden');
+    })
+})

@@ -35,32 +35,32 @@
     <div class="WorkSpace w-full h-full" id="WorkSpace">
         <div class="relative [grid-area:conference]">
             <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-green-300 opacity-50"></div>
-            <button class="absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
+            <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2  text-black  font-bold text-lg">conference</h3>
         </div>
         <div class="relative [grid-area:servers]">
             <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-red-400 opacity-50"></div>
-            <button class="absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
+            <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">servers</h3>
        </div>
         <div class="relative [grid-area:security]">
             <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-red-400 opacity-50"></div>
-            <button class="absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
+            <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">security</h3>
         </div>
         <div class="relative [grid-area:Réception]">
             <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-red-400 opacity-50"></div>
-            <button class="absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
+            <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">Réception</h3>
         </div>
         <div class="relative [grid-area:personnel]">
             <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-green-300 opacity-50"></div>
-            <button class="absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
+            <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
             <h3 class="absolute top-1 left-1/2 -translate-x-1/2 text-black font-bold text-xs md:text-lg md:top-2">personnel</h3>
         </div>
         <div class="relative [grid-area:archive]">
             <div class="room flex justify-center items-center p-8 w-full h-full empty:bg-red-400 opacity-50"></div>
-            <button class="absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
+            <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">archive</h3>
         </div>
     </main>
@@ -141,6 +141,11 @@
         <button class="Edit-btn bg-yellow-400 p-2 rounded cursor-pointer transition-all Duration-500 hover:scale-95"><i class="fa-solid fa-pen"></i> Edit</button>
         </div>
    </div>
+   </div>
+   <div id="add-modal" class="modal w-full h-screen fixed top-0 left-0 backdrop-blur-[2px] flex justify-center items-center p-4 hidden">
+     <div class="relative w-full max-w-116 bg-white h-100 rounded-xl shadow-md px-2 py-4 flex flex-col gap-2 overflow-y-auto ">
+        <button class="close-Modal-btn absolute top-2 right-4 text-3xl cursor-pointer">&times;</button>
+     </div>
    </div>
     <script src="app.js"></script>
 </body>
