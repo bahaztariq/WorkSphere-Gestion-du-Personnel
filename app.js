@@ -147,7 +147,7 @@ function DisplayStaff(workersData) {
         stafItem.innerHTML = `
                                 <div class="flex">
                                     <img src="${staff.photo}" alt="staff image" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
-                                    <h3 class="font-bold text-[.8rem] md:text-[1rem] mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> <span class="md:text-[.8rem] text-gray-400">${staff.role}</span></h3>
+                                    <h3 class="font-bold text-[.8rem] md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> <span class="md:text-[.8rem] text-gray-400">${staff.role}</span></h3>
                                 </div>
                                 <div class="flex">
                                     <button class="mr-3 text-yellow-600 text-[.7rem] md:text-[1.2rem] font-bold cursor-pointer">Edit</button>
@@ -195,7 +195,7 @@ function showData(staff){
      email.textContent =staff.email;
      role.textContent = staff.role;
      phone.textContent =staff.phone;
-     img.src = staff.photo
+     img.src = staff.photo || '../img/Profil.jpg'
      staff.experiences.forEach(exp =>{
          Experience.innerHTML += `<div>
                                  <p>Title: <span>${exp.title}</span></p>
@@ -211,8 +211,36 @@ const addroombtn = document.querySelectorAll('.add-room-btn');
 const addmodal =document.getElementById('add-modal')
 
 
-addroombtn.forEach(btn=>{
-    btn.addEventListener('click',e=>{
+addroombtn.forEach(btn =>{
+    btn.addEventListener('click',e => {
+        const roomName = btn.getAttribute('room-name')
         addmodal.classList.remove('hidden');
+        showWorker(roomName);
     })
 })
+
+const assigncontainer=document.querySelector('.assign');
+
+function showWorker(roomName){
+    assigncontainer.innerHTML=``;
+    const CanAssigned = workersData.filter(w => zonePermissions[roomName].includes(w.role));
+    CanAssigned.forEach(staff=>{
+        const stafItem = document.createElement('div');
+        stafItem.draggable='true';
+        stafItem.addEventListener('click',()=>{
+            detailsmodal.classList.remove('hidden');
+            showData(staff);
+        })
+        stafItem.classList.add('Member','w-full','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
+        stafItem.innerHTML = `
+                                <div class="flex">
+                                    <img src="${staff.photo}" alt="staff image" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
+                                    <h3 class="font-bold text-[.8rem] md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> <span class="md:text-[.8rem] text-gray-400">${staff.role}</span></h3>
+                                </div>
+                                <div class="flex">
+                                    <button class="mr-3 text-yellow-600 text-[.7rem] md:text-[1.2rem] font-bold cursor-pointer">Edit</button>
+                                </div>`
+                            ;
+        assigncontainer.appendChild(stafItem);
+    })
+}
