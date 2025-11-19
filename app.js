@@ -141,6 +141,7 @@ function DisplayStaff(workersData) {
         stafItem.draggable='true';
         stafItem.addEventListener('click',()=>{
             detailsmodal.classList.remove('hidden');
+            showData(staff);
         })
         stafItem.classList.add('Member','w-full','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
         stafItem.innerHTML = `
@@ -179,3 +180,29 @@ unassignedList.addEventListener("dragover", e => {
         const draggable = document.querySelector(".dragging");
         unassignedList.appendChild(draggable);
 })
+
+
+function showData(staff){
+    
+     const img = detailsmodal.querySelector('img')
+     const name = detailsmodal.querySelector('.name');
+     const email = detailsmodal.querySelector('.email');
+     const role = detailsmodal.querySelector('.role');
+     const phone = detailsmodal.querySelector('.phone');
+     const Experience= detailsmodal.querySelector('.Experience');
+     Experience.innerHTML =``;
+     name.textContent = staff.fullname;
+     email.textContent =staff.email;
+     role.textContent = staff.role;
+     phone.textContent =staff.phone;
+     img.src = staff.photo
+     staff.experiences.forEach(exp =>{
+         Experience.innerHTML += `<div>
+                                 <p>Title: <span>${exp.title}</span></p>
+                                  <p>Company: <span>${exp.company}</span></p>
+                                  <p>start date: <span>${exp.startDate}</span></p>
+                                  <p>End date: <span>${exp.endDate}</span></p>
+                                 </div>
+         `;
+     })
+}
