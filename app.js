@@ -23,6 +23,14 @@ const zonePermissions = {
     "Réception": ["Réceptionnistes", "Manager", "Nettoyage", "Autres rôles"],
     "archive": ["Manager", "Réceptionnistes", "Techniciens IT", "Agents de sécurité"]
 };
+const zonelimit ={
+    "conference":6,
+    "personnel": 6,
+    "servers": 3,
+    "security": 3,
+    "Réception": 10,
+    "archive":2
+}
 
 let workersData = JSON.parse(localStorage.getItem('workSphereData')) || [];
 DisplayStaff(workersData);
@@ -214,24 +222,34 @@ const addmodal =document.getElementById('add-modal')
 addroombtn.forEach(btn =>{
     btn.addEventListener('click',e => {
         const roomName = btn.getAttribute('room-name')
+        const room = btn.parentElement.querySelector('.room');
+        console.log(room)
         addmodal.classList.remove('hidden');
-        showWorker(roomName);
+        showWorker(roomName,room);
     })
 })
 
 const assigncontainer=document.querySelector('.assign');
 
-function showWorker(roomName){
+function showWorker(roomName,room){
     assigncontainer.innerHTML=``;
     const CanAssigned = workersData.filter(w => zonePermissions[roomName].includes(w.role));
     CanAssigned.forEach(staff=>{
         const stafItem = document.createElement('div');
         stafItem.draggable='true';
         stafItem.addEventListener('click',()=>{
-            detailsmodal.classList.remove('hidden');
-            showData(staff);
+            room.appendChild(stafItem)
+            workersData = workersData.filter(w => w.id !== staff.id);
+            DisplayStaff(workersData);
+            stafItem.innerHTML =`
+                                <div class="relative flex flex-col justify-center items-center p-1">
+                                    <img src="${staff.photo}" alt="staff image" class="rounded-full w-6 h-6  md:w-14 md:h-14 object-cover">
+                                    <h3 class="font-bold text-sm text-center ">${staff.fullname} <br> <span class="md:text-xs text-gray-400 text-center">${staff.role}</span></h3>
+                                    <button class="absolute top-1 right-1 cursor-pointer">&times;</button>
+                                </div>
+                                `;
         })
-        stafItem.classList.add('Member','w-full','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
+        stafItem.classList.add('Member','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
         stafItem.innerHTML = `
                                 <div class="flex">
                                     <img src="${staff.photo}" alt="staff image" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
