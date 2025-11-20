@@ -101,6 +101,12 @@ function validateForm(formData) {
         alert('Numéro de téléphone invalide');
         return false;
     }
+    for (let exp of formData.experiences) {
+      if (new Date(exp.startDate) >= new Date(exp.endDate)) {
+       alert('La date de début doit être antérieure à la date de fin pour toutes les expériences');
+      return false;
+    }
+    }
 
     return true;
 }
@@ -124,7 +130,7 @@ workerForm.addEventListener('submit', e => {
         id: Date.now(),
         fullname: workerForm.querySelector('input[type="text"]').value,
         role: workerForm.querySelector('#Role').value,
-        photo: imgUrl.value || 'img/Profil.jpg',
+        photo: imgUrl.value != '' ? imgUrl.value : 'img/Profil.jpg',
         email: workerForm.querySelector('input[type="email"]').value,
         phone: workerForm.querySelector('input[type="phone"]').value,
         experiences: experiences,
@@ -162,6 +168,7 @@ function DisplayStaff(workersData) {
                                 </div>`
                             ;
         unassignedList.appendChild(stafItem);
+        countSpan.textContent = unassignedList.childElementCount;
     })
 }
 
@@ -223,7 +230,6 @@ addroombtn.forEach(btn =>{
     btn.addEventListener('click',e => {
         const roomName = btn.getAttribute('room-name')
         const room = btn.parentElement.querySelector('.room');
-        console.log(room)
         addmodal.classList.remove('hidden');
         showWorker(roomName,room);
     })
@@ -237,18 +243,6 @@ function showWorker(roomName,room){
     CanAssigned.forEach(staff=>{
         const stafItem = document.createElement('div');
         stafItem.draggable='true';
-        stafItem.addEventListener('click',()=>{
-            room.appendChild(stafItem)
-            workersData = workersData.filter(w => w.id !== staff.id);
-            DisplayStaff(workersData);
-            stafItem.innerHTML =`
-                                <div class="relative flex flex-col justify-center items-center p-1">
-                                    <img src="${staff.photo}" alt="staff image" class="rounded-full w-6 h-6  md:w-14 md:h-14 object-cover">
-                                    <h3 class="font-bold text-sm text-center ">${staff.fullname} <br> <span class="md:text-xs text-gray-400 text-center">${staff.role}</span></h3>
-                                    <button class="absolute top-1 right-1 cursor-pointer">&times;</button>
-                                </div>
-                                `;
-        })
         stafItem.classList.add('Member','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
         stafItem.innerHTML = `
                                 <div class="flex">
@@ -259,6 +253,23 @@ function showWorker(roomName,room){
                                     <button class="mr-3 text-yellow-600 text-[.7rem] md:text-[1.2rem] font-bold cursor-pointer">Edit</button>
                                 </div>`
                             ;
-        assigncontainer.appendChild(stafItem);
+    assigncontainer.appendChild(stafItem);
+        stafItem.addEventListener('click', e =>{
+            room.appendChild(stafItem)
+            workersData = workersData.filter(w => w.id !== staff.id);
+            DisplayStaff(workersData);
+            stafItem.innerHTML =`
+                                <div class="relative flex flex-col justify-center items-center p-2">
+                                    <img src="${staff.photo}" alt="staff image" class="rounded-full w-6 h-6  md:w-14 md:h-14 object-cover">
+                                    <h3 class="font-bold text-sm text-center ">${staff.fullname} <br> <span class="md:text-xs text-gray-400 text-center">${staff.role}</span></h3>
+                                    <button class="remove-staff absolute top-1 right-1 cursor-pointer" >&times;</button>
+                                </div>
+                                `;
+            if(e.target.classList.contains('remove-staff')){
+               stafItem.remove();
+               workersData.push(staff);
+               DisplayStaff(workersData);
+              }
+        })
     })
 }
