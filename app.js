@@ -14,7 +14,7 @@ const previewimg = document.getElementById('previewimg');
 const imgUrl =document.getElementById('img-url');
 
 
-
+// zone permission and limit 
 const zonePermissions = {
     "conference": ["Manager", "Réceptionnistes", "Techniciens IT", "Agents de sécurité", "Nettoyage", "Autres rôles"],
     "personnel": ["Manager", "Réceptionnistes", "Techniciens IT", "Agents de sécurité", "Nettoyage", "Autres rôles"],
@@ -32,9 +32,11 @@ const zonelimit ={
     "archive":2
 }
 
+// load data from localstorage
 let workersData = JSON.parse(localStorage.getItem('workSphereData')) || [];
 DisplayStaff(workersData);
 
+// add new experience field
 addExpBtn.addEventListener('click', addExperienceField);
 
 function addExperienceField() {
@@ -55,6 +57,7 @@ function addExperienceField() {
     expContainer.appendChild(cloneExp);
 }
 
+// hide modals when clicking empty field
 modals.forEach((mdl)=>{
     mdl.addEventListener('click',(e)=>{
         if(e.target.classList.contains('modal')){
@@ -63,9 +66,11 @@ modals.forEach((mdl)=>{
     })
 })
 
+// show formulaire modal
 addBtn.addEventListener('click',()=>{
         addForum.classList.remove('hidden');
 })
+// closing modals
 closemodal.forEach((closemdl)=>{
     closemdl.addEventListener('click',(e)=>{
         const parentModal = closemdl.closest('.modal');
@@ -74,18 +79,19 @@ closemodal.forEach((closemdl)=>{
         }
     })
 })
-
+// change img in form based on the url 
 imgUrl.addEventListener('change',e =>{
     previewimg.src = e.target.value || '../img/Profil.jpg';
 })
-
+// show if staff member is allowod to enter an era or not;
 function isAllowed(role,zone){
     return zonePermissions[zone].includes(role);
 }
+// validation form
 function validateForm(formData) {
     const nameRegex = /^[a-zA-ZÀ-ÿ\s'-]{2,50}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[\d\s\-\+\(\)]{10,20}$/;
+    const phoneRegex = /^[0-9]{10}$/;
 
     if (!nameRegex.test(formData.fullname)) {
         alert('Nom invalide (2-50 caractères, lettres uniquement)');
@@ -110,7 +116,7 @@ function validateForm(formData) {
 
     return true;
 }
-
+// submit from form and save data to localstorage
 workerForm.addEventListener('submit', e => {
     e.preventDefault();
 
@@ -147,6 +153,7 @@ workerForm.addEventListener('submit', e => {
     DisplayStaff(workersData);
 });
 
+// display unassigned staff in the sidebar
 function DisplayStaff(workersData) {
 
     unassignedList.innerHTML = '';
@@ -172,6 +179,8 @@ function DisplayStaff(workersData) {
     })
 }
 
+// drag and drop functionalities
+
 const Members = document.querySelectorAll(".Member")
 
 Members.forEach(Member => {
@@ -196,7 +205,7 @@ unassignedList.addEventListener("dragover", e => {
         unassignedList.appendChild(draggable);
 })
 
-
+// function to show each worker data in a modal
 function showData(staff){
     
      const img = detailsmodal.querySelector('img')
@@ -222,6 +231,7 @@ function showData(staff){
      })
 }
 
+// function to click on  add  btns
 const addroombtn = document.querySelectorAll('.add-room-btn');
 const addmodal =document.getElementById('add-modal')
 
@@ -235,6 +245,8 @@ addroombtn.forEach(btn =>{
     })
 })
 
+
+// show worker that i can add to a Room
 const assigncontainer=document.querySelector('.assign');
 
 function showWorker(roomName,room){
