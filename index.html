@@ -6,7 +6,6 @@
     <title>WorkSphere - Gestion du Personnel</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="img/logo.svg">
     <style>
         .WorkSpace{
@@ -34,32 +33,32 @@
     <img src="img/WorkSpace.jpg" alt="WorkSpace" class="absolute top-0 left-0 -z-50 w-full h-full">
     <div class="WorkSpace w-full h-full" id="WorkSpace">
         <div class="relative [grid-area:conference]">
-            <div class="room flex justify-center items-center gap-1 p-8 w-full h-full empty:bg-green-300 empty:opacity-50"></div>
+            <div class="room flex flex-wrap justify-center items-center gap-1 p-3 w-full h-full empty:bg-green-300 empty:opacity-50"></div>
             <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105" room-name="conference">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2  text-black  font-bold text-lg">conference</h3>
         </div>
         <div class="relative [grid-area:servers]">
-            <div class="room flex justify-center items-center gap-1 p-8 w-full h-full empty:bg-red-400 empty:opacity-50"></div>
+            <div class="room flex flex-wrap justify-center items-center gap-1 p-3 w-full h-full empty:bg-red-400 empty:opacity-50"></div>
             <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105" room-name="servers">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">servers</h3>
        </div>
         <div class="relative [grid-area:security]">
-            <div class="room flex justify-center items-center gap-1 p-8 w-full h-full empty:bg-red-400 empty:opacity-50"></div>
+            <div class="room flex flex-wrap justify-center items-center gap-1 p-3 w-full h-full empty:bg-red-400 empty:opacity-50"></div>
             <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105" room-name="security">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">security</h3>
         </div>
         <div class="relative [grid-area:Réception]">
-            <div class="room flex justify-center items-center gap-1 p-8 w-full h-full empty:bg-red-400 empty:opacity-50"></div>
+            <div class="room flex flex-wrap justify-center items-center gap-1 p-3 w-full h-full empty:bg-red-400 empty:opacity-50"></div>
             <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105" room-name="Réception">+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">Réception</h3>
         </div>
         <div class="relative [grid-area:personnel]">
-            <div class="room  flex justify-center items-center gap-1 p-8 w-full h-full empty:bg-green-300 empty:opacity-50"></div>
+            <div class="room flex flex-wrap justify-center items-center gap-1 p-3 w-full h-full empty:bg-green-300 empty:opacity-50"></div>
             <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105" room-name="personnel">+</button>
             <h3 class="absolute top-1 left-1/2 -translate-x-1/2 text-black font-bold text-xs md:text-lg md:top-2">personnel</h3>
         </div>
         <div class="relative [grid-area:archive]">
-            <div class="room archive flex justify-center items-center gap-1 p-8 w-full h-full empty:bg-red-400 empty:opacity-50"></div>
+            <div class="room flex flex-wrap justify-center items-center gap-1 p-3 w-full h-full empty:bg-red-400 empty:opacity-50"></div>
             <button class="add-room-btn absolute left-1/2 top-[85%] -translate-1/2 bg-blue-600 w-8 h-8 flex justify-center items-center transition-all Duration-500 rounded-3xl text-white text-lg cursor-pointer hover:scale-105" room-name="archive" >+</button>
             <h3 class="absolute top-2 left-1/2 -translate-x-1/2 text-black font-bold text-lg">archive</h3>
         </div>

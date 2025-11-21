@@ -24,8 +24,8 @@ const zonePermissions = {
     "archive": ["Manager", "Réceptionnistes", "Techniciens IT", "Agents de sécurité"]
 };
 const zonelimit ={
-    "conference":6,
-    "personnel": 6,
+    "conference":8,
+    "personnel": 3,
     "servers": 3,
     "security": 3,
     "Réception": 10,
@@ -171,10 +171,7 @@ function DisplayStaff(workersData) {
                 <h3 class="font-bold text-[.8rem] md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> 
                     <span class="md:text-[.8rem] text-gray-400">${staff.role}</span>
                 </h3>
-            </div>
-            <div class="flex">
-                <button class="mr-3 text-yellow-600 text-[.7rem] md:text-[1.2rem] font-bold cursor-pointer">Edit</button>
-            </div>`;
+            </div>`
         unassignedList.appendChild(stafItem);
     });
     
@@ -259,10 +256,11 @@ function showWorker(roomName, room) {
             }
             
             const roomItem = stafItem.cloneNode(true);
+            roomItem.style.transform = "scale(0.8)"
             roomItem.innerHTML = `
                 <div class="relative flex flex-col justify-center items-center p-2">
                     <img src="${staff.photo}" class="rounded-full w-6 h-6 md:w-14 md:h-14 object-cover">
-                    <h3 class="font-bold text-sm text-center">${staff.fullname} <br> 
+                    <h3 class="font-bold text-sm text-center">${staff.fullname.split(' ')[0]} <br> 
                         <span class="md:text-xs text-gray-400">${staff.role}</span>
                     </h3>
                     <button class="remove-staff absolute top-1 right-1 cursor-pointer text-red-500 text-lg">&times;</button>
@@ -299,10 +297,11 @@ function loadAssignedWorkers() {
             if (roomBtn) {
                 const room = roomBtn.parentElement.querySelector('.room');
                 const roomItem = document.createElement('div');
+                roomItem.style.transform = "scale(0.8)"
                 roomItem.innerHTML = `
                     <div class="relative flex flex-col justify-center items-center p-2 bg-gray-200 rounded-xl ">
                         <img src="${staff.photo}" class="rounded-full w-6 h-6 md:w-14 md:h-14 object-cover">
-                        <h3 class="font-bold text-sm text-center">${staff.fullname} <br> 
+                        <h3 class="font-bold text-sm text-center">${staff.fullname.split(' ')[0]} <br> 
                             <span class="md:text-xs text-gray-400">${staff.role}</span>
                         </h3>
                         <button class="remove-staff absolute top-1 right-1 cursor-pointer text-red-500 text-lg">&times;</button>
