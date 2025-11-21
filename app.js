@@ -188,6 +188,8 @@ function showData(staff){
      const phone = detailsmodal.querySelector('.phone');
      const place = detailsmodal.querySelector('.Actual-place');
      const Experience= detailsmodal.querySelector('.Experience');
+     const deleteBtn = detailsmodal.querySelector('.Delete-btn');
+     const editbtn = detailsmodal.querySelector('.Edit-btn');
      Experience.innerHTML =``;
      name.textContent = staff.fullname;
      email.textContent =staff.email;
@@ -201,9 +203,12 @@ function showData(staff){
                                   <p>Company: <span>${exp.company}</span></p>
                                   <p>start date: <span>${exp.startDate}</span></p>
                                   <p>End date: <span>${exp.endDate}</span></p>
+                                  <br>
                                  </div>
          `;
      })
+     deleteBtn.addEventListener('click',() => deletestaff(staff));
+     editbtn.addEventListener('click',() => editstaff(staff));
 }
 
 // function to click on  add  btns
@@ -349,3 +354,12 @@ filterRole.addEventListener('change',e =>{
         DisplayStaff(workersData);
     }
 })
+
+function deletestaff(staff) {
+   if(confirm('are you sure you want to delete this person')){
+    workersData = workersData.filter(w=> w.id !== staff.id);
+    localStorage.setItem('workSphereData',JSON.stringify(workersData));
+    DisplayStaff(workersData);
+    detailsmodal.classList.add('hidden');
+   }
+}
