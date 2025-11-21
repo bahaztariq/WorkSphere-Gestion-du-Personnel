@@ -186,12 +186,14 @@ function showData(staff){
      const email = detailsmodal.querySelector('.email');
      const role = detailsmodal.querySelector('.role');
      const phone = detailsmodal.querySelector('.phone');
+     const place = detailsmodal.querySelector('.Actual-place');
      const Experience= detailsmodal.querySelector('.Experience');
      Experience.innerHTML =``;
      name.textContent = staff.fullname;
      email.textContent =staff.email;
      role.textContent = staff.role;
      phone.textContent =staff.phone;
+     place.textContent = staff.zone;
      img.src = staff.photo || '../img/Profil.jpg'
      staff.experiences.forEach(exp =>{
          Experience.innerHTML += `<div>
@@ -263,7 +265,7 @@ function showWorker(roomName, room) {
                     <h3 class="font-bold text-sm text-center">${staff.fullname.split(' ')[0]} <br> 
                         <span class="md:text-xs text-gray-400">${staff.role}</span>
                     </h3>
-                    <button class="remove-staff absolute top-1 right-1 cursor-pointer text-red-500 text-lg">&times;</button>
+                    <button class="remove-staff absolute top-0 right-1 cursor-pointer text-red-500 text-lg">&times;</button>
                 </div>`;
             
             room.appendChild(roomItem);
@@ -282,6 +284,10 @@ function showWorker(roomName, room) {
                 localStorage.setItem('workSphereData', JSON.stringify(workersData));
                 DisplayStaff(workersData);
             });
+            roomItem.addEventListener('click',()=>{
+                detailsmodal.classList.remove('hidden')
+                showData(staff);
+            })
         });
     });
 }
@@ -304,7 +310,7 @@ function loadAssignedWorkers() {
                         <h3 class="font-bold text-sm text-center">${staff.fullname.split(' ')[0]} <br> 
                             <span class="md:text-xs text-gray-400">${staff.role}</span>
                         </h3>
-                        <button class="remove-staff absolute top-1 right-1 cursor-pointer text-red-500 text-lg">&times;</button>
+                        <button class="remove-staff absolute top-0 right-1 cursor-pointer text-red-500 text-lg">&times;</button>
                     </div>`;
                 room.appendChild(roomItem);
                 
@@ -315,8 +321,31 @@ function loadAssignedWorkers() {
                     localStorage.setItem('workSphereData', JSON.stringify(workersData));
                     DisplayStaff(workersData);
                 });
+                roomItem.addEventListener('click',()=>{
+                detailsmodal.classList.remove('hidden')
+                showData(staff);
+                })
             }
         }
     });
 }
 loadAssignedWorkers();
+
+
+const search =document.getElementById('Search');
+const filterRole = document.getElementById('filterRole');
+
+
+
+search.addEventListener('keyup',e => {
+    const filteredName = workersData.filter(w => !w.fullname.toUpperCase().indexOf(search.value.toUpperCase()));
+    DisplayStaff(filteredName);
+})
+
+filterRole.addEventListener('change',e =>{
+    const filteredRole = workersData.filter(w => w.role == filterRole.value);
+    DisplayStaff(filteredRole);
+    if(filterRole.value ==''){
+        DisplayStaff(workersData);
+    }
+})
