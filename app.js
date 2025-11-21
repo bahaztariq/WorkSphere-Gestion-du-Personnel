@@ -155,55 +155,31 @@ workerForm.addEventListener('submit', e => {
 
 // display unassigned staff in the sidebar
 function DisplayStaff(workersData) {
-
     unassignedList.innerHTML = '';
-    workersData.forEach(staff => {
+    const unassigned = workersData.filter(staff => !staff.zone);
+    
+    unassigned.forEach(staff => {
         const stafItem = document.createElement('div');
-        stafItem.draggable='true';
-        stafItem.addEventListener('click',()=>{
+        stafItem.addEventListener('click', () => {
             detailsmodal.classList.remove('hidden');
             showData(staff);
-        })
-        stafItem.classList.add('Member','w-full','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
+        });
+        stafItem.classList.add('Member', 'w-full', 'shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
         stafItem.innerHTML = `
-                                <div class="flex">
-                                    <img src="${staff.photo}" alt="staff image" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
-                                    <h3 class="font-bold text-[.8rem] md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> <span class="md:text-[.8rem] text-gray-400">${staff.role}</span></h3>
-                                </div>
-                                <div class="flex">
-                                    <button class="mr-3 text-yellow-600 text-[.7rem] md:text-[1.2rem] font-bold cursor-pointer">Edit</button>
-                                </div>`
-                            ;
+            <div class="flex">
+                <img src="${staff.photo}" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
+                <h3 class="font-bold text-[.8rem] md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> 
+                    <span class="md:text-[.8rem] text-gray-400">${staff.role}</span>
+                </h3>
+            </div>
+            <div class="flex">
+                <button class="mr-3 text-yellow-600 text-[.7rem] md:text-[1.2rem] font-bold cursor-pointer">Edit</button>
+            </div>`;
         unassignedList.appendChild(stafItem);
-        countSpan.textContent = unassignedList.childElementCount;
-    })
+    });
+    
+    countSpan.textContent = unassigned.length;
 }
-
-// drag and drop functionalities
-
-const Members = document.querySelectorAll(".Member")
-
-Members.forEach(Member => {
-    Member.addEventListener("dragstart", e => {
-        Member.classList.add("dragging");
-    })
-
-    Member.addEventListener("dragend", e => {
-        Member.classList.remove("dragging");
-    })
-})
-
-rooms.forEach(room => {
-    room.addEventListener("dragover", e => {
-        const draggable = document.querySelector(".dragging");
-        room.appendChild(draggable)
-    })
-})
-
-unassignedList.addEventListener("dragover", e => {
-        const draggable = document.querySelector(".dragging");
-        unassignedList.appendChild(draggable);
-})
 
 // function to show each worker data in a modal
 function showData(staff){
@@ -249,39 +225,99 @@ addroombtn.forEach(btn =>{
 // show worker that i can add to a Room
 const assigncontainer=document.querySelector('.assign');
 
-function showWorker(roomName,room){
-    assigncontainer.innerHTML=``;
-    const CanAssigned = workersData.filter(w => zonePermissions[roomName].includes(w.role));
-    CanAssigned.forEach(staff=>{
+// 1. REPLACE showWorker function - Add zone limit check
+function showWorker(roomName, room) {
+    assigncontainer.innerHTML = ``;
+    const roomLimit = zonelimit[roomName];
+    
+    // Check room capacity
+    if (room.childElementCount >= roomLimit) {
+        alert(`Zone pleine (${roomLimit} max)`);
+        addmodal.classList.add('hidden');
+        return;
+    }
+    
+    const CanAssigned = workersData.filter(w => zonePermissions[roomName].includes(w.role) && !w.zone);
+    
+    CanAssigned.forEach(staff => {
         const stafItem = document.createElement('div');
-        stafItem.draggable='true';
-        stafItem.classList.add('Member','shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
+        stafItem.classList.add('Member', 'shadow-md', 'rounded-lg', 'flex', 'justify-between', 'bg-gray-200');
         stafItem.innerHTML = `
-                                <div class="flex">
-                                    <img src="${staff.photo}" alt="staff image" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
-                                    <h3 class="font-bold text-[.8rem] md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> <span class="md:text-[.8rem] text-gray-400">${staff.role}</span></h3>
-                                </div>
-                                <div class="flex">
-                                    <button class="mr-3 text-yellow-600 text-[.7rem] md:text-[1.2rem] font-bold cursor-pointer">Edit</button>
-                                </div>`
-                            ;
-    assigncontainer.appendChild(stafItem);
-        stafItem.addEventListener('click', e =>{
-            room.appendChild(stafItem)
-            workersData = workersData.filter(w => w.id !== staff.id);
+            <div class="flex">
+                <img src="${staff.photo}" alt="staff image" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
+                <h3 class="font-bold text-[.8rem] md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> 
+                    <span class="md:text-[.8rem] text-gray-400">${staff.role}</span>
+                </h3>
+            </div>`;
+        
+        assigncontainer.appendChild(stafItem);
+        
+        stafItem.addEventListener('click', e => {
+            if (room.childElementCount >= roomLimit) {
+                alert(`Zone pleine (${roomLimit} max)`);
+                return;
+            }
+            
+            const roomItem = stafItem.cloneNode(true);
+            roomItem.innerHTML = `
+                <div class="relative flex flex-col justify-center items-center p-2">
+                    <img src="${staff.photo}" class="rounded-full w-6 h-6 md:w-14 md:h-14 object-cover">
+                    <h3 class="font-bold text-sm text-center">${staff.fullname} <br> 
+                        <span class="md:text-xs text-gray-400">${staff.role}</span>
+                    </h3>
+                    <button class="remove-staff absolute top-1 right-1 cursor-pointer text-red-500 text-lg">&times;</button>
+                </div>`;
+            
+            room.appendChild(roomItem);
+            
+            // Update and save
+            staff.zone = roomName;
+            localStorage.setItem('workSphereData', JSON.stringify(workersData));
             DisplayStaff(workersData);
-            stafItem.innerHTML =`
-                                <div class="relative flex flex-col justify-center items-center p-2">
-                                    <img src="${staff.photo}" alt="staff image" class="rounded-full w-6 h-6  md:w-14 md:h-14 object-cover">
-                                    <h3 class="font-bold text-sm text-center ">${staff.fullname} <br> <span class="md:text-xs text-gray-400 text-center">${staff.role}</span></h3>
-                                    <button class="remove-staff absolute top-1 right-1 cursor-pointer" >&times;</button>
-                                </div>
-                                `;
-            if(e.target.classList.contains('remove-staff')){
-               stafItem.remove();
-               workersData.push(staff);
-               DisplayStaff(workersData);
-              }
-        })
-    })
+            addmodal.classList.add('hidden');
+            
+            // Remove button
+            roomItem.querySelector('.remove-staff').addEventListener('click', (e) => {
+                e.stopPropagation();
+                roomItem.remove();
+                staff.zone = null;
+                localStorage.setItem('workSphereData', JSON.stringify(workersData));
+                DisplayStaff(workersData);
+            });
+        });
+    });
 }
+
+// UPDATE DisplayStaff - Only show unassigned
+
+
+// 3. ADD loadAssignedWorkers - Restore on page load
+function loadAssignedWorkers() {
+    workersData.forEach(staff => {
+        if (staff.zone) {
+            const roomBtn = document.querySelector(`[room-name="${staff.zone}"]`);
+            if (roomBtn) {
+                const room = roomBtn.parentElement.querySelector('.room');
+                const roomItem = document.createElement('div');
+                roomItem.innerHTML = `
+                    <div class="relative flex flex-col justify-center items-center p-2 bg-gray-200 rounded-xl ">
+                        <img src="${staff.photo}" class="rounded-full w-6 h-6 md:w-14 md:h-14 object-cover">
+                        <h3 class="font-bold text-sm text-center">${staff.fullname} <br> 
+                            <span class="md:text-xs text-gray-400">${staff.role}</span>
+                        </h3>
+                        <button class="remove-staff absolute top-1 right-1 cursor-pointer text-red-500 text-lg">&times;</button>
+                    </div>`;
+                room.appendChild(roomItem);
+                
+                roomItem.querySelector('.remove-staff').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    roomItem.remove();
+                    staff.zone = null;
+                    localStorage.setItem('workSphereData', JSON.stringify(workersData));
+                    DisplayStaff(workersData);
+                });
+            }
+        }
+    });
+}
+loadAssignedWorkers();
