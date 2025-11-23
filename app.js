@@ -168,7 +168,7 @@ function DisplayStaff(workersData) {
         stafItem.innerHTML = `
             <div class="flex">
                 <img src="${staff.photo}" class="rounded-full w-8 h-8 m-2 md:m-3 md:w-14 md:h-14 object-cover">
-                <h3 class="font-bold text-[.8rem] md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> 
+                <h3 class="font-bold text-xs md:text-lg mt-1 md:mt-3 md:ml-4">${staff.fullname} <br> 
                     <span class="md:text-[.8rem] text-gray-400">${staff.role}</span>
                 </h3>
             </div>`
@@ -365,4 +365,18 @@ function deletestaff(staff) {
     DisplayStaff(workersData);
     detailsmodal.classList.add('hidden');
    }
+}
+function editstaff(staff){
+    addForum.classList.remove('hidden');
+
+    workerForm.querySelector('input[type="text"]').value = staff.fullname
+    workerForm.querySelector('#Role').value = staff.role
+    imgUrl.value = staff.photo
+    workerForm.querySelector('input[type="email"]').value = staff.email
+    workerForm.querySelector('input[type="phone"]').value = staff.phone
+    for(let exp of staff.experiences){
+    
+         workerForm.querySelector('.exp-title').value = exp.title;
+    }
+    workerForm.querySelector('input[type="submit"]').value ="update";
 }
