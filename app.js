@@ -24,7 +24,7 @@ const zonePermissions = {
     "archive": ["Manager", "Réceptionnistes", "Techniciens IT", "Agents de sécurité"]
 };
 const zonelimit ={
-    "conference":8,
+    "conference":6,
     "personnel": 3,
     "servers": 3,
     "security": 3,
@@ -229,12 +229,10 @@ addroombtn.forEach(btn =>{
 // show worker that i can add to a Room
 const assigncontainer=document.querySelector('.assign');
 
-// 1. REPLACE showWorker function - Add zone limit check
 function showWorker(roomName, room) {
     assigncontainer.innerHTML = ``;
     const roomLimit = zonelimit[roomName];
     
-    // Check room capacity
     if (room.childElementCount >= roomLimit) {
         alert(`Zone pleine (${roomLimit} max)`);
         addmodal.classList.add('hidden');
@@ -275,13 +273,12 @@ function showWorker(roomName, room) {
             
             room.appendChild(roomItem);
             
-            // Update and save
+
             staff.zone = roomName;
             localStorage.setItem('workSphereData', JSON.stringify(workersData));
             DisplayStaff(workersData);
             addmodal.classList.add('hidden');
             
-            // Remove button
             roomItem.querySelector('.remove-staff').addEventListener('click', (e) => {
                 e.stopPropagation();
                 roomItem.remove();
@@ -297,10 +294,9 @@ function showWorker(roomName, room) {
     });
 }
 
-// UPDATE DisplayStaff - Only show unassigned
 
 
-// 3. ADD loadAssignedWorkers - Restore on page load
+//  ADD loadAssignedWorkers - Restore on page load
 function loadAssignedWorkers() {
     workersData.forEach(staff => {
         if (staff.zone) {
@@ -342,17 +338,24 @@ const filterRole = document.getElementById('filterRole');
 
 
 
-search.addEventListener('keyup',e => {
-    const filteredName = workersData.filter(w => !w.fullname.toUpperCase().indexOf(search.value.toUpperCase()));
+search.addEventListener('keyup', e => {
+    const searchValue = search.value.toUpperCase().trim();
+    if (searchValue === '') {
+        DisplayStaff(workersData);
+        return;
+    }  
+    const filteredName = workersData.filter(w =>  w.fullname.toUpperCase().includes(searchValue));    
     DisplayStaff(filteredName);
-})
+});
 
 filterRole.addEventListener('change',e =>{
+    if(filterRole.value ===''){
+        DisplayStaff(workersData);
+        return;
+    }
     const filteredRole = workersData.filter(w => w.role == filterRole.value);
     DisplayStaff(filteredRole);
-    if(filterRole.value ==''){
-        DisplayStaff(workersData);
-    }
+    
 })
 
 function deletestaff(staff) {
